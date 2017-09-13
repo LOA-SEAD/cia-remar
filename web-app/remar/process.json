@@ -1,0 +1,29 @@
+{
+  "name": "Detetive",
+  "uri": "detetive",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "Banco de Casos",
+      "uri": "caso",
+      "description": "Criar/editar/selecionar um banco de casos para o jogo.",
+      "type": "text_database",
+      "dependencies": null,
+      "outputs": [
+        {
+          "name": "casos.json",
+          "type": "json",
+          "path": "json"
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    "web"
+  ],
+
+  "vars": {
+    "width": 800,
+    "height": 600
+  }
+}
