@@ -18,27 +18,27 @@ environments {
 
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/detetive"
+            url = "jdbc:mysql://localhost/cia"
         }
         dataSource_remar {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/remar"
+            url = "jdbc:mysql://localhost/cia"
         }
     }
     test {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/detetive"
+            url = "jdbc:mysql://localhost/cia"
         }
         dataSource_remar {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost/remar"
+            url = "jdbc:mysql://localhost/cia"
         }
     }
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/detetive"
+            url = "jdbc:mysql://localhost/cia"
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
                 jmxEnabled = true

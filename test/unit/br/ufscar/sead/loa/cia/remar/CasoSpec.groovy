@@ -1,4 +1,4 @@
-package br.ufscar.sead.loa.detetive.remar
+package br.ufscar.sead.loa.cia.remar
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification

@@ -21,7 +21,7 @@ window.addEventListener("beforeunload", function() {
     $.ajax({
         type:'GET',
         //async: false,
-        url: location.origin + "/detetive/process/complete/RefactorTask",
+        url: location.origin + "/cia/process/complete/RefactorTask",
         success:function(data){
             console.log("ok");
         },

@@ -1,4 +1,4 @@
-package br.ufscar.sead.loa.detetive.remar
+package br.ufscar.sead.loa.cia.remar
 
 
 import br.ufscar.sead.loa.remar.User
@@ -491,7 +491,7 @@ log.info("Terminei")
             port = 8080
         }
 
-        render "/detetive/samples/export/exportCasos.csv"
+        render "/cia/samples/export/exportCasos.csv"
 
 
     }

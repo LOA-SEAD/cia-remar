@@ -1,4 +1,4 @@
-<%@ page import="br.ufscar.sead.loa.detetive.remar.Caso" %>
+<%@ page import="br.ufscar.sead.loa.cia.remar.Caso" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +31,7 @@
 <body>
 <div class="cluster-header">
 	<p class="text-teal text-darken-3 left-align margin-bottom" style="font-size: 28px;">
-		Detetive - Tabela de Casos
+		CIA - Tabela de Casos
 	</p>
 </div>
 
@@ -303,7 +303,7 @@
 					<li>O arquivo deve representar a estrutura da tabela ao lado</li>
 				</ol>
 				<ul>
-					<li><a href="/detetive/samples/exemploDetetive.csv" >Download do arquivo exemplo</a></li>
+					<li><a href="/cia/samples/exemploCIA.csv" >Download do arquivo exemplo</a></li>
 				</ul>
 			</div>
 			<div class="col s6">
@@ -350,7 +350,7 @@
 
 
 
-<script type="text/javascript" src="/detetive/js/materialize.min.js"></script>
+<script type="text/javascript" src="/cia/js/materialize.min.js"></script>
 <script type="text/javascript">
 
     function changeEditCaso(variable) {

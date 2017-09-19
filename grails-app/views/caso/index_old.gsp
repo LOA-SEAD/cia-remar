@@ -1,5 +1,5 @@
 
-<%@ page import="br.ufscar.sead.loa.detetive.remar.Caso" %>
+<%@ page import="br.ufscar.sead.loa.cia.remar.Caso" %>
 <!DOCTYPE html>
 <html>
 	<head>

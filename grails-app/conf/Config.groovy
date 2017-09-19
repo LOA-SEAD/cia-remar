@@ -109,13 +109,13 @@ environments {
 
         grails.config.locations = ["classpath:env.properties"]
 
-        grails.app.context = "/detetive"
+        grails.app.context = "/cia"
         grails.logging.jul.usebridge = true
     }
     production {
         grails.config.locations = ["classpath:env.properties"]
         grails.logging.jul.usebridge = false
-        grails.app.context = "/detetive"
+        grails.app.context = "/cia"
     }
 }
 

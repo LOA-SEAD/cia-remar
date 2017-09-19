@@ -38,7 +38,7 @@ window.onload = function(){
             alert("Você deve selecionar um tema antes de enviar.");
         }
         else{
-            window.top.location.href = "/detetive/theme/choose/" + id;
+            window.top.location.href = "/cia/theme/choose/" + id;
         }
     });
 
@@ -53,7 +53,7 @@ window.onload = function(){
         $.ajax({
             type:'POST',
             data: data,
-            url: "/detetive/theme/delete/" + id,
+            url: "/cia/theme/delete/" + id,
             success:function(data){
                 console.log(data);
                 $(tr).hide();

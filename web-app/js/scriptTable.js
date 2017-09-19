@@ -54,7 +54,7 @@ window.onload = function(){
 
             params = params.substr(0, params.length -1);
 
-            window.top.location.href = "/detetive/caso/toJson/" + params;
+            window.top.location.href = "/cia/caso/toJson/" + params;
         }
         else{
             $('#totalCaso').empty();
@@ -134,7 +134,7 @@ function getIndice(){
 
 function save(tr) {
     var tds = $(tr).find("td");
-    var url = location.origin + '/detetive/caso/save/';
+    var url = location.origin + '/cia/caso/save/';
     var data = { descricao: $(tds)[1].textContent,
                  pergunta1: $(tds)[2].textContent, 
                  pergunta2: $(tds)[3].textContent,
@@ -168,7 +168,7 @@ function save(tr) {
 
 function update(tr) {
     var tds = $(tr).find("td");
-    var url = location.origin + '/detetive/caso/update/' + $(tr).attr('data-id');
+    var url = location.origin + '/cia/caso/update/' + $(tr).attr('data-id');
     var data = { descricao: $(tds)[0].textContent,
                  pergunta1: $(tds)[1].textContent,
                  resposta1: $(tds)[2].textContent,
@@ -199,7 +199,7 @@ function update(tr) {
 
 
 function _edit(tr){
-    var url = location.origin + '/detetive/caso/returnInstance/' + $(tr).attr('data-id');
+    var url = location.origin + '/cia/caso/returnInstance/' + $(tr).attr('data-id');
     var data = {_method: 'GET'};
     $.ajax({
             type: 'GET',
@@ -274,7 +274,7 @@ function _delete() {
     else{
         if(list_id.length==1){
             if(confirm("Você tem certeza que deseja deletar esse caso?")){
-                url = location.origin + '/detetive/caso/delete/' + list_id[0];
+                url = location.origin + '/cia/caso/delete/' + list_id[0];
                 data = {_method: 'DELETE'};
                 trID = "#tr"+list_id[0];
                 $.ajax({
@@ -293,7 +293,7 @@ function _delete() {
         else{
             if(confirm("Você tem certeza que deseja deletar esses casos?")){
                 for(var i=0;i<list_id.length;i++){
-                    url = location.origin + '/detetive/caso/delete/' + list_id[i];
+                    url = location.origin + '/cia/caso/delete/' + list_id[i];
                     data = {_method: 'DELETE'};
                     trID = "#tr"+list_id[i];
                     $(trID).remove();
@@ -407,7 +407,7 @@ function exportCasos(){
         $.ajax({
             type: "POST",
             traditional: true,
-            url: "/detetive/caso/exportCSV",
+            url: "/cia/caso/exportCSV",
             data: { list_id: list_id },
             success: function(returndata) {
                 console.log(returndata);
