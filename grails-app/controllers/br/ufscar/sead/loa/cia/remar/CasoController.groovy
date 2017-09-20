@@ -20,11 +20,6 @@ class CasoController {
 
     def springSecurityService
 
-    /*def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Caso.list(params), model:[casoInstanceCount: Caso.count()]
-    }*/
-
     def index(Integer max) {
         log.info("\nEntrou no index")
         if (params.t) {
@@ -35,7 +30,7 @@ class CasoController {
         def list = Caso.findAllByAuthor(session.user.username)
 
         render view: "index", model: [casoInstanceList: list, casoinstanceCount: list.size(),
-                                      userName: session.user.username, userId: session.user.id]
+                                      userName        : session.user.username, userId: session.user.id]
 
     }
 
@@ -102,29 +97,6 @@ class CasoController {
 
     }
 
-    /*@Transactional
-    def save(Caso casoInstance) {
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (casoInstance.hasErrors()) {
-            respond casoInstance.errors, view:'create'
-            return
-        }
-
-        casoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'caso.label', default: 'Caso'), casoInstance.id])
-                redirect casoInstance
-            }
-            '*' { respond casoInstance, [status: CREATED] }
-        }
-    }*/
-
     @Transactional
     def save(Caso casoInstance) {
         log.info("\nEntrou no save")
@@ -159,29 +131,6 @@ class CasoController {
         respond casoInstance
     }
 
-    /*@Transactional
-    def update(Caso casoInstance) {
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (casoInstance.hasErrors()) {
-            respond casoInstance.errors, view:'edit'
-            return
-        }
-
-        casoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Caso.label', default: 'Caso'), casoInstance.id])
-                redirect casoInstance
-            }
-            '*'{ respond casoInstance, [status: OK] }
-        }
-    }*/
-
     @Transactional
     def update() {
         log.info("\nEntrou no update")
@@ -202,31 +151,10 @@ class CasoController {
         casoInstance.resposta5 = params.resposta5
         casoInstance.pistafinal = params.pistafinal
 
-
-
-        casoInstance.save flush:true
+        casoInstance.save flush: true
 
         redirect action: "index"
     }
-
-    /*@Transactional
-    def delete(Caso casoInstance) {
-
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        casoInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Caso.label', default: 'Caso'), casoInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }*/
 
     @Transactional
     def delete(Caso casoInstance) {
@@ -253,16 +181,13 @@ class CasoController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'caso.label', default: 'Caso'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 
 
     def toJson() {
         log.info("\nEntrou no toJson")
-
-
-
 
         def list = Caso.getAll(params.id ? params.id.split(',').toList() : null)
 
@@ -273,64 +198,64 @@ class CasoController {
         list.get(2).indice = 3
 
         def json = builder(
-                    [
-                            ('caso'+list.get(0).indice+'descricao'): [list.get(0).getDescricao()],
-                            ('caso'+list.get(0).indice+'perguntas'): [
-                                    list.get(0).getPergunta1(),
-                                    list.get(0).getPergunta2(),
-                                    list.get(0).getPergunta3(),
-                                    list.get(0).getPergunta4(),
-                                    list.get(0).getPergunta5(),
-                                    list.get(0).getPergunta6()
-                           ],
+                [
+                        ('caso' + list.get(0).indice + 'descricao') : [list.get(0).getDescricao()],
+                        ('caso' + list.get(0).indice + 'perguntas') : [
+                                list.get(0).getPergunta1(),
+                                list.get(0).getPergunta2(),
+                                list.get(0).getPergunta3(),
+                                list.get(0).getPergunta4(),
+                                list.get(0).getPergunta5(),
+                                list.get(0).getPergunta6()
+                        ],
 
-                            ('caso'+list.get(0).indice+'respostas'): [
-                                    list.get(0).getResposta1(),
-                                    list.get(0).getResposta2(),
-                                    list.get(0).getResposta3(),
-                                    list.get(0).getResposta4(),
-                                    list.get(0).getResposta5()
-                           ],
-                            ('caso'+list.get(0).indice+'pistafinal'): [list.get(0).getPistafinal()],
+                        ('caso' + list.get(0).indice + 'respostas') : [
+                                list.get(0).getResposta1(),
+                                list.get(0).getResposta2(),
+                                list.get(0).getResposta3(),
+                                list.get(0).getResposta4(),
+                                list.get(0).getResposta5()
+                        ],
+                        ('caso' + list.get(0).indice + 'pistafinal'): [list.get(0).getPistafinal()],
 
-                            ('caso'+list.get(1).indice+'descricao'): [list.get(1).getDescricao()],
-                            ('caso'+list.get(1).indice+'perguntas'): [
-                                    list.get(1).getPergunta1(),
-                                    list.get(1).getPergunta2(),
-                                    list.get(1).getPergunta3(),
-                                    list.get(1).getPergunta4(),
-                                    list.get(1).getPergunta5(),
-                                    list.get(1).getPergunta6()
-                            ],
+                        ('caso' + list.get(1).indice + 'descricao') : [list.get(1).getDescricao()],
+                        ('caso' + list.get(1).indice + 'perguntas') : [
+                                list.get(1).getPergunta1(),
+                                list.get(1).getPergunta2(),
+                                list.get(1).getPergunta3(),
+                                list.get(1).getPergunta4(),
+                                list.get(1).getPergunta5(),
+                                list.get(1).getPergunta6()
+                        ],
 
-                            ('caso'+list.get(1).indice+'respostas'): [
-                                    list.get(1).getResposta1(),
-                                    list.get(1).getResposta2(),
-                                    list.get(1).getResposta3(),
-                                    list.get(1).getResposta4(),
-                                    list.get(1).getResposta5()
-                            ],
-                            ('caso'+list.get(1).indice+'pistafinal'): [list.get(1).getPistafinal()],
+                        ('caso' + list.get(1).indice + 'respostas') : [
+                                list.get(1).getResposta1(),
+                                list.get(1).getResposta2(),
+                                list.get(1).getResposta3(),
+                                list.get(1).getResposta4(),
+                                list.get(1).getResposta5()
+                        ],
+                        ('caso' + list.get(1).indice + 'pistafinal'): [list.get(1).getPistafinal()],
 
-                            ('caso'+list.get(2).indice+'descricao'): [list.get(2).getDescricao()],
-                            ('caso'+list.get(2).indice+'perguntas'): [
-                                    list.get(2).getPergunta1(),
-                                    list.get(2).getPergunta2(),
-                                    list.get(2).getPergunta3(),
-                                    list.get(2).getPergunta4(),
-                                    list.get(2).getPergunta5(),
-                                    list.get(2).getPergunta6()
-                            ],
+                        ('caso' + list.get(2).indice + 'descricao') : [list.get(2).getDescricao()],
+                        ('caso' + list.get(2).indice + 'perguntas') : [
+                                list.get(2).getPergunta1(),
+                                list.get(2).getPergunta2(),
+                                list.get(2).getPergunta3(),
+                                list.get(2).getPergunta4(),
+                                list.get(2).getPergunta5(),
+                                list.get(2).getPergunta6()
+                        ],
 
-                            ('caso'+list.get(2).indice+'respostas'): [
-                                    list.get(2).getResposta1(),
-                                    list.get(2).getResposta2(),
-                                    list.get(2).getResposta3(),
-                                    list.get(2).getResposta4(),
-                                    list.get(2).getResposta5()
-                            ],
-                            ('caso'+list.get(2).indice+'pistafinal'): [list.get(2).getPistafinal()]
-                    ]
+                        ('caso' + list.get(2).indice + 'respostas') : [
+                                list.get(2).getResposta1(),
+                                list.get(2).getResposta2(),
+                                list.get(2).getResposta3(),
+                                list.get(2).getResposta4(),
+                                list.get(2).getResposta5()
+                        ],
+                        ('caso' + list.get(2).indice + 'pistafinal'): [list.get(2).getPistafinal()]
+                ]
         )
 
         log.debug builder.toString()
@@ -357,26 +282,25 @@ class CasoController {
         redirect uri: "http://${request.serverName}:${port}/process/task/complete/${session.taskId}", params: [files: id]
     }
 
-    def returnInstance(Caso casoInstance){
+    def returnInstance(Caso casoInstance) {
         log.info("\nEntrou no returnInstance")
         if (casoInstance == null) {
             notFound()
-        }
-        else{
-            render  casoInstance.descricao + "%@!" +
-                    casoInstance.pergunta1 + "%@!"+
-                    casoInstance.pergunta2 + "%@!"+
-                    casoInstance.pergunta3 + "%@!"+
-                    casoInstance.pergunta4 + "%@!"+
-                    casoInstance.pergunta5 + "%@!"+
-                    casoInstance.pergunta6 + "%@!"+
+        } else {
+            render casoInstance.descricao + "%@!" +
+                    casoInstance.pergunta1 + "%@!" +
+                    casoInstance.pergunta2 + "%@!" +
+                    casoInstance.pergunta3 + "%@!" +
+                    casoInstance.pergunta4 + "%@!" +
+                    casoInstance.pergunta5 + "%@!" +
+                    casoInstance.pergunta6 + "%@!" +
 
-                    casoInstance.resposta1 + "%@!"+
-                    casoInstance.resposta2 + "%@!"+
-                    casoInstance.resposta3 + "%@!"+
-                    casoInstance.resposta4 + "%@!"+
-                    casoInstance.resposta5 + "%@!"+
-                    casoInstance.pistafinal + "%@!"+
+                    casoInstance.resposta1 + "%@!" +
+                    casoInstance.resposta2 + "%@!" +
+                    casoInstance.resposta3 + "%@!" +
+                    casoInstance.resposta4 + "%@!" +
+                    casoInstance.resposta5 + "%@!" +
+                    casoInstance.pistafinal + "%@!" +
 
                     casoInstance.version + "%@!" +
                     casoInstance.id
@@ -385,17 +309,17 @@ class CasoController {
 
     @Transactional
     def generateCasos() {
-log.info("generateCasos")
+        log.info("generateCasos")
         MultipartFile csv = params.csv
         def user = springSecurityService.getCurrentUser()
         def userId = user.toString().split(':').toList()
         String username = User.findById(userId[1].toInteger()).username
-log.info("abrindo arquivo CVS")
-        csv.inputStream.toCsvReader(['separatorChar': ';', 'charset':'UTF-8']).eachLine { row ->
+        log.info("abrindo arquivo CVS")
+        csv.inputStream.toCsvReader(['separatorChar': ';', 'charset': 'UTF-8']).eachLine { row ->
 
             Caso casoInstance = new Caso()
 
-            try{
+            try {
                 casoInstance.descricao = row[0] ?: "NA";
                 casoInstance.pergunta1 = row[1] ?: "NA";
                 casoInstance.resposta1 = row[2] ?: "NA";
@@ -410,7 +334,7 @@ log.info("abrindo arquivo CVS")
                 casoInstance.pergunta6 = row[11] ?: "NA";
                 casoInstance.pistafinal = row[12] ?: "NA";
             }
-            catch (ArrayIndexOutOfBoundsException exception){
+            catch (ArrayIndexOutOfBoundsException exception) {
                 //println("Not default .csv - Model: Title-Answer-Category")
                 log.error("Erro ao processar arquivo CSV")
             }
@@ -421,19 +345,18 @@ log.info("abrindo arquivo CVS")
 
             if (casoInstance.hasErrors()) {
 
-            }
-            else{
+            } else {
                 log.info("salvando um caso " + casoInstance.descricao)
                 casoInstance.save flush: true
             }
 
         }
-log.info("Terminei")
+        log.info("Terminei")
         redirect(action: index())
 
     }
 
-    def exportCSV(){
+    def exportCSV() {
         /* Função que exporta as questões selecionadas para um arquivo .csv genérico.
            O arquivo .csv gerado será compatível com os modelos Escola Mágica, Forca e Responda Se Puder.
            O arquivo gerado possui os seguintes campos na ordem correspondente:
@@ -441,10 +364,10 @@ log.info("Terminei")
            O campo Dica é correspondente ao modelo Responda Se Puder e o campo Tema ao modelo Forca.
            O separador do arquivo .csv gerado é o ";" (ponto e vírgula)
         */
-        ArrayList<Integer> list_casoId = new ArrayList<Integer>() ;
+        ArrayList<Integer> list_casoId = new ArrayList<Integer>();
         ArrayList<Caso> casoList = new ArrayList<Caso>();
         list_casoId.addAll(params.list_id);
-        for (int i=0; i<list_casoId.size();i++){
+        for (int i = 0; i < list_casoId.size(); i++) {
             casoList.add(Caso.findById(list_casoId[i]));
 
         }
@@ -458,7 +381,7 @@ log.info("Terminei")
         def fw = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("$instancePath/exportCasos.csv"), "UTF-8"));
 
-        for(int i=0; i<casoList.size();i++){
+        for (int i = 0; i < casoList.size(); i++) {
             /*
             "1;" + questionList.getAt(i).statement + ";" +
              questionList.getAt(i).answer + ";"  +
@@ -482,7 +405,7 @@ log.info("Terminei")
                     casoList.getAt(i).getResposta5() + ";" +
                     casoList.getAt(i).getPergunta6() + ";" +
                     casoList.getAt(i).getPistafinal() + ";" +
-                    "\n" )
+                    "\n")
         }
         fw.close()
 
@@ -495,82 +418,4 @@ log.info("Terminei")
 
 
     }
-    /*@Transactional
-    def save(Caso casoInstance) {
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (casoInstance.hasErrors()) {
-            respond casoInstance.errors, view:'create'
-            return
-        }
-
-        casoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'caso.label', default: 'Caso'), casoInstance.id])
-                redirect casoInstance
-            }
-            '*' { respond casoInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Caso casoInstance) {
-        respond casoInstance
-    }
-
-    @Transactional
-    def update(Caso casoInstance) {
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (casoInstance.hasErrors()) {
-            respond casoInstance.errors, view:'edit'
-            return
-        }
-
-        casoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Caso.label', default: 'Caso'), casoInstance.id])
-                redirect casoInstance
-            }
-            '*'{ respond casoInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Caso casoInstance) {
-
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        casoInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Caso.label', default: 'Caso'), casoInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'caso.label', default: 'Caso'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }*/
 }
