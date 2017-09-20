@@ -197,16 +197,19 @@ class CasoController {
         list.get(1).indice = 2
         list.get(2).indice = 3
 
+        final String SEGREDO = "<segredo>"
+        final String PONTOS = "....................";
+
         def json = builder(
                 [
                         ('caso' + list.get(0).indice + 'descricao') : [list.get(0).getDescricao()],
                         ('caso' + list.get(0).indice + 'perguntas') : [
-                                list.get(0).getPergunta1(),
-                                list.get(0).getPergunta2(),
-                                list.get(0).getPergunta3(),
-                                list.get(0).getPergunta4(),
-                                list.get(0).getPergunta5(),
-                                list.get(0).getPergunta6()
+                                list.get(0).getPergunta1().replaceAll(SEGREDO, PONTOS),
+                                list.get(0).getPergunta2().replaceAll(SEGREDO, PONTOS),
+                                list.get(0).getPergunta3().replaceAll(SEGREDO, PONTOS),
+                                list.get(0).getPergunta4().replaceAll(SEGREDO, PONTOS),
+                                list.get(0).getPergunta5().replaceAll(SEGREDO, PONTOS),
+                                list.get(0).getPergunta6().replaceAll(SEGREDO, PONTOS)
                         ],
 
                         ('caso' + list.get(0).indice + 'respostas') : [
@@ -220,12 +223,12 @@ class CasoController {
 
                         ('caso' + list.get(1).indice + 'descricao') : [list.get(1).getDescricao()],
                         ('caso' + list.get(1).indice + 'perguntas') : [
-                                list.get(1).getPergunta1(),
-                                list.get(1).getPergunta2(),
-                                list.get(1).getPergunta3(),
-                                list.get(1).getPergunta4(),
-                                list.get(1).getPergunta5(),
-                                list.get(1).getPergunta6()
+                                list.get(1).getPergunta1().replaceAll(SEGREDO, PONTOS),
+                                list.get(1).getPergunta2().replaceAll(SEGREDO, PONTOS),
+                                list.get(1).getPergunta3().replaceAll(SEGREDO, PONTOS),
+                                list.get(1).getPergunta4().replaceAll(SEGREDO, PONTOS),
+                                list.get(1).getPergunta5().replaceAll(SEGREDO, PONTOS),
+                                list.get(1).getPergunta6().replaceAll(SEGREDO, PONTOS)
                         ],
 
                         ('caso' + list.get(1).indice + 'respostas') : [
@@ -239,12 +242,12 @@ class CasoController {
 
                         ('caso' + list.get(2).indice + 'descricao') : [list.get(2).getDescricao()],
                         ('caso' + list.get(2).indice + 'perguntas') : [
-                                list.get(2).getPergunta1(),
-                                list.get(2).getPergunta2(),
-                                list.get(2).getPergunta3(),
-                                list.get(2).getPergunta4(),
-                                list.get(2).getPergunta5(),
-                                list.get(2).getPergunta6()
+                                list.get(2).getPergunta1().replaceAll(SEGREDO, PONTOS),
+                                list.get(2).getPergunta2().replaceAll(SEGREDO, PONTOS),
+                                list.get(2).getPergunta3().replaceAll(SEGREDO, PONTOS),
+                                list.get(2).getPergunta4().replaceAll(SEGREDO, PONTOS),
+                                list.get(2).getPergunta5().replaceAll(SEGREDO, PONTOS),
+                                list.get(2).getPergunta6().replaceAll(SEGREDO, PONTOS)
                         ],
 
                         ('caso' + list.get(2).indice + 'respostas') : [

@@ -1,5 +1,5 @@
 {
-  "name": "Cherlóqui Investigações de Acasos",
+  "name": "CIA",
   "uri": "cia",
   "version": 1,
   "tasks": [
@@ -13,7 +13,7 @@
         {
           "name": "casos.json",
           "type": "json",
-          "path": "json"
+          "path": ""
         }
       ]
     }
