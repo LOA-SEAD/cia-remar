@@ -1,0 +1,4 @@
+[submodule "web-app/remar/source"]
+	path = web-app/remar/source
+	url = https://github.com/LOA-SEAD/caca_palavras.git
+        branch = exported
