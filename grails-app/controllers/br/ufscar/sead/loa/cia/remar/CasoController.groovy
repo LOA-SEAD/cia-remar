@@ -1,6 +1,5 @@
 package br.ufscar.sead.loa.cia.remar
 
-
 import br.ufscar.sead.loa.remar.User
 import br.ufscar.sead.loa.remar.api.MongoHelper
 import grails.converters.JSON
