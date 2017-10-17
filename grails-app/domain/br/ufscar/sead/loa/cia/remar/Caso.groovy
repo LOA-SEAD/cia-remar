@@ -16,7 +16,6 @@ class Caso {
     String resposta5
     String pistafinal
     String author
-    int indice
     long ownerId
     String taskId
 
@@ -36,7 +35,6 @@ class Caso {
         resposta5 blank: false, size: 1..15
         pistafinal blank: false, size: 1..15
         author blank: false
-        indice blank: true
         ownerId blank: false, nullable: false
         taskId nullable: true
 

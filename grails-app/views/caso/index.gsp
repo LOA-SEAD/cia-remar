@@ -4,7 +4,6 @@
 <head>
     <!--Import Google Icon Font, Font Awesome and Page CSS-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <g:external dir="css" file="caso.css"/>
 
     <!--Let browser know website is optimized for mobile-->

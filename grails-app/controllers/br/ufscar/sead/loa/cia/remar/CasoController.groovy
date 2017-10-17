@@ -20,7 +20,6 @@ class CasoController {
     def springSecurityService
 
     def index(Integer max) {
-        log.info("\nEntrou no index")
         if (params.t) {
             session.taskId = params.t
         }
@@ -105,7 +104,6 @@ class CasoController {
 
     @Transactional
     def update() {
-        log.info("\nEntrou no update")
         Caso casoInstance = Caso.findById(Integer.parseInt(params.casoID))
 
         casoInstance.descricao = params.descricao
@@ -182,7 +180,7 @@ class CasoController {
     }
 
 
-    private def toJson(list) {
+    private toJson(list) {
         def builder = new JsonBuilder()
 
         list.get(0).indice = 1
@@ -272,11 +270,10 @@ class CasoController {
     }
 
     def returnInstance(Caso casoInstance) {
-        log.info("\nEntrou no returnInstance")
         if (casoInstance == null) {
             notFound()
         } else {
-            render casoInstance.descricao + "%@!" +
+            render  casoInstance.descricao + "%@!" +
                     casoInstance.pergunta1 + "%@!" +
                     casoInstance.pergunta2 + "%@!" +
                     casoInstance.pergunta3 + "%@!" +
@@ -298,7 +295,6 @@ class CasoController {
 
     @Transactional
     def generateCasos() {
-        log.info("generateCasos")
         MultipartFile csv = params.csv
         def user = springSecurityService.getCurrentUser()
         def userId = user.toString().split(':').toList()
@@ -404,7 +400,5 @@ class CasoController {
         }
 
         render "/cia/samples/export/exportCasos.csv"
-
-
     }
 }
