@@ -141,7 +141,7 @@ layout: pattern(conversionPattern:'%d [%t] %-5p %c{2} %x - %m%n'))
 
 root {
 info 'dailyAppender'
-} 
+}
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -174,7 +174,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/data/**':                       ['permitAll'],
     '/**/scss/**':                    ['permitAll'],
     '/**/less/**':                    ['permitAll'],
-    '/**/fonts/**':                   ['permitAll'],
+    '/**/font/**':                   ['permitAll'],
     '/samples/**':                    ['permitAll']
 ]
 
