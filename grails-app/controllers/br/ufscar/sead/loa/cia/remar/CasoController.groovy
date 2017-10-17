@@ -44,8 +44,8 @@ class CasoController {
 
 
     @Transactional
-    def newCaso(Caso casoInstance) {
-        log.info("\nEntrou no newCaso 1")
+    def save(Caso casoInstance) {
+        log.info("Saving new Case for ownerId" + session.user.id)
         if (casoInstance.author == null) {
             casoInstance.author = session.user.username
         }
@@ -69,11 +69,18 @@ class CasoController {
         newCaso.resposta5 = casoInstance.resposta5
         newCaso.pistafinal = casoInstance.pistafinal
 
-        newCaso.author = casoInstance.author
-        newCaso.indice = casoInstance.indice
-        newCaso.ownerId = casoInstance.ownerId
+        if (casoInstance.author) {
+            newCaso.author = casoInstance.author
+        } else {
+            newCaso.author = session.user.username
+        }
 
-        log.info("\nAtribuiu valores ao caso " + newCaso.descricao)
+        if (casoInstance.ownerId) {
+            newCaso.ownerId = casoInstance.ownerId
+        } else {
+            newCaso.ownerId = session.user.id
+        }
+
         if (newCaso.hasErrors()) {
             respond newCaso.errors, view: 'create' //TODO
             render newCaso.errors;
@@ -94,40 +101,6 @@ class CasoController {
         redirect(action: index())
 
 
-    }
-
-    @Transactional
-    def save(Caso casoInstance) {
-        log.info("\nEntrou no save")
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (casoInstance.hasErrors()) {
-            respond casoInstance.errors, view: 'create' //TODO
-            render casoInstance.errors;
-            return
-        }
-
-        casoInstance.taskId = session.taskId as String
-
-        casoInstance.save flush: true
-
-        if (request.isXhr()) {
-            render(contentType: "application/json") {
-                JSON.parse("{\"id\":" + casoInstance.getId() + "}")
-            }
-        } else {
-            // TODO
-        }
-
-        redirect(action: index())
-    }
-
-    def edit(Caso casoInstance) {
-        log.info("\nEntrou no edit")
-        respond casoInstance
     }
 
     @Transactional

@@ -106,15 +106,13 @@
 
     <!-- Modal Structure -->
     <div id="createModal" class="modal remar-modal">
-        <g:form name="createForm" url="[resource: casoInstance, action: 'newCaso']">
+        <g:form name="createForm" url="[resource: casoInstance, action: 'save']">
             <div class="modal-content">
-                <h4>Criar Questão <i class="material-icons tooltipped" data-position="right" data-delay="30" data-tooltip="Respostas não devem possuir números nem caracteres especiais.">info</i> </h4>
-                <div class="row">
-                    <g:render template="form"/>
-                </div>
+                <h4>Criar Caso <i class="material-icons tooltipped" data-position="right" data-delay="30" data-tooltip="Respostas não devem possuir números nem caracteres especiais.">info</i> </h4>
+                <g:render template="form"/>
             </div>
             <div class="modal-footer">
-                <a id="saveCaseButton" href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange">Criar</a>
+                <a id="saveCaseButton" href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange">Enviar</a>
                 <a href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange">Cancelar</a>
             </div>
         </g:form>
