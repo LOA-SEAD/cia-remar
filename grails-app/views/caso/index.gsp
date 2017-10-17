@@ -37,15 +37,14 @@
                             <div class="col s2">
                                 <i class="material-icons">drag_handle</i>
                             </div>
-                            <div class="col s5">
+                            <div class="col s8">
                                 <span>${fieldValue(bean: CaseInstance, field: "descricao")}</span>
                             </div>
-                            <div class="col s3">
-                                <span class="case-structure">${fieldValue(bean: CaseInstance, field: "pergunta1")}</span>
-                            </div>
                             <div class="col s2">
-                                <i class="fa fa-info tooltipped"
-                                   data-position="bottom" data-delay="50" data-tooltip="${fieldValue(bean: CaseInstance, field: "pistafinal")}"></i>
+                                <a class="editButton btn-floating waves-effect waves-light remar-orange tooltipped" data-tooltip="Editar"
+                                   href="#" data-case-id="${fieldValue(bean: CaseInstance, field: "id")}" data-owner-id="${fieldValue(bean: CaseInstance, field: "ownerId")}">
+                                    <i style="margin:0;" class="material-icons">edit</i>
+                                </a>
                             </div>
                         </li>
                     </g:each>
@@ -90,11 +89,11 @@
                             </a>
                         </div>
                         <div class="col s2">
-                            <a id="importButton" class="btn-floating waves-effect waves-light my-orange tooltipped" data-tooltip="Upload de arquivo .csv"><i
+                            <a id="importButton" class="btn-floating waves-effect waves-light remar-orange tooltipped" data-tooltip="Upload de arquivo .csv"><i
                                     class="material-icons">file_upload</i></a>
                         </div>
                         <div class="col s2">
-                            <a id="exportButton" class="btn-floating waves-effect waves-light my-orange tooltipped" data-tooltip="Exportar questões para .csv"><i
+                            <a id="exportButton" class="btn-floating waves-effect waves-light remar-orange tooltipped" data-tooltip="Exportar questões para .csv"><i
                                     class="material-icons">file_download</i></a>
                         </div>
                     </div>
@@ -119,84 +118,17 @@
 
     <!-- Modal -->
     <div id="editModal" class="modal remar-modal">
-        <g:form url="[resource: casoInstance, action: 'update']" method="PUT">
+        <g:form name="editForm" action="edit" method="PUT">
             <div class="modal-content">
                 <h4>Editar Caso</h4>
                 <div class="row">
-                <div class="input-field col s12">
-                    <input id="editDescricao" name="descricao" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="descricaoLabel" for="editDescricao">Descricao: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPergunta1" name="pergunta1" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                        <label id="pergunta1Label" for="editPergunta1">Pergunta 1: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editResposta1" name="resposta1" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="resposta1Label" for="editResposta1">Resposta 1: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPergunta2" name="pergunta2" required="" value="" type="text" class="validate remar-input" maxlength="150">
-
-                    <label id="pergunta2Label" for="editPergunta2">Pergunta 2: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editResposta2" name="resposta2" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="resposta2Label" for="editResposta2">Resposta 2: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPergunta3" name="pergunta3" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="pergunta3Label" for="editPergunta3">Pergunta 3: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editResposta3" name="resposta3" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="resposta3Label" for="editResposta3">Resposta 3: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPergunta4" name="pergunta4" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="pergunta4Label" for="editPergunta4">Pergunta 4: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editResposta4" name="resposta4" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="resposta4Label" for="editResposta4">Resposta 4: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPergunta5" name="pergunta5" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="pergunta5Label" for="editPergunta5">Pergunta 5: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editResposta5" name="resposta5" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="resposta5Label" for="editResposta5">Resposta 5: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPergunta6" name="pergunta6" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="pergunta6Label" for="editPergunta6">Pergunta 6: </label>
-                </div>
-
-                <div class="input-field col s12">
-                    <input id="editPistaFinal" name="pistafinal" required="" value="" type="text" class="validate remar-input" maxlength="150">
-                    <label id="editPistaFinalLabel" for="editPistaFinal">Pista final: </label>
-                </div>
-
-                <input type="hidden" id="editAuthor" name="authorID">
-                <input type="hidden" id="casoID" name="casoID">
-                <input type="hidden" id="editIndice" name="indice">
+                    <g:render template="form"/>
+                    <input type="hidden" id="editCasoID" name="id">
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange" action="update"
-                   onclick="$(this).closest('form').submit()" name="create">Atualizar</a>
+                <a href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange"
+                   onclick="document.editForm.submit()">Atualizar</a>
                 <a href="#!" class="modal-action modal-close btn waves-effect waves-light remar-orange">Cancelar</a>
             </div>
         </g:form>

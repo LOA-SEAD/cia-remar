@@ -1,19 +1,21 @@
 /**
- * Last Update: 28/07/17.
- * Created by: Pedro Garcia on 24/07/17.
- * Authors: Pedro Garcia,
- *          Lucas Yuji Suguinoshita.
+ * Last Update: 17/10/17.
+ * Created by:  Pedro Garcia on 24/07/17.
+ * Authors:     Pedro Garcia,
+ *              Lucas Yuji Suguinoshita.
 **/
 
 // Server URLs used by this script;
-var DELETE_URL = "/cia/caso/delete";
-var SEND_URL= "/cia/caso/send";
+var SEND_URL     = "/cia/caso/send";
+var DELETE_URL   = "/cia/caso/delete";
+var UPDATE_URL   = "/cia/caso/update"
+var INSTANCE_URL = "/cia/caso/returnInstance"
 
 // Interface messages used as feedback to user.
+var ERROR_MSG               = "Ocorreu um erro! Tente novamente.";
 var SELECT_CASE_MSG         = "Por favor selecione pelo menos três casos.";
+var REMOVE_SUCCESS_MSG      = "Caso removido com sucesso.";
 var MAX_CASE_REACHED_MSG    = "Por favor selecione menos casos!";
-var REMOVE_SUCCESS_MSG          = "Caso removido com sucesso.";
-var ERROR_MSG                   = "Ocorreu um erro! Tente novamente.";
 
 // Constants used by this script.
 var MIN_CASE_COUNT = 3;
@@ -112,6 +114,38 @@ $(document).ready(function () {
     // New case button click function
     $("#createButton").click(function() {
         $("#createModal").openModal();
+    });
+
+    // Case edit button function
+    $("li .editButton").click(function(){
+        var caseId = $(this).data('case-id');
+        $.ajax({
+            type: 'GET',
+            url:  INSTANCE_URL + "/" + caseId,
+            data: {'_method': 'GET'},
+            success: function(response) {
+                var caseInstance = response.split("%@!");
+                $("#editForm #descricao").attr("value", caseInstance[0]).siblings("label").attr("class","active");
+                $("#editForm #pergunta1").val(caseInstance[1]).siblings("label").attr("class","active");
+                $("#editForm #pergunta2").val(caseInstance[2]).siblings("label").attr("class","active");
+                $("#editForm #pergunta3").val(caseInstance[3]).siblings("label").attr("class","active");
+                $("#editForm #pergunta4").val(caseInstance[4]).siblings("label").attr("class","active");
+                $("#editForm #pergunta5").val(caseInstance[5]).siblings("label").attr("class","active");
+                $("#editForm #pergunta6").val(caseInstance[6]).siblings("label").attr("class","active");
+                $("#editForm #resposta1").attr("value", caseInstance[7]).siblings("label").attr("class","active");
+                $("#editForm #resposta2").attr("value", caseInstance[8]).siblings("label").attr("class","active");
+                $("#editForm #resposta3").attr("value", caseInstance[9]).siblings("label").attr("class","active");
+                $("#editForm #resposta4").attr("value", caseInstance[10]).siblings("label").attr("class","active");
+                $("#editForm #resposta5").attr("value", caseInstance[11]).siblings("label").attr("class","active");
+                $("#editForm #pistafinal").attr("value", caseInstance[12]).siblings("label").attr("class","active");
+                $("#editForm #editCasoID").attr("value", caseInstance[14]);
+                document.editForm.action = UPDATE_URL + "/" + caseId
+                $("#editModal").openModal();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        })
     });
 
     $("#saveCaseButton").click(function() {
