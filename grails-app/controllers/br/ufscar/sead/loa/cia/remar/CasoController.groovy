@@ -15,7 +15,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class CasoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", send: "POST"]
 
     def springSecurityService
 
@@ -28,8 +28,8 @@ class CasoController {
 
         def list = Caso.findAllByAuthor(session.user.username)
 
-        render view: "index", model: [casoInstanceList: list, casoinstanceCount: list.size(),
-                                      userName        : session.user.username, userId: session.user.id]
+        render view: "index", model: [CaseInstanceList: list, caseInstanceCount: list.size(),
+                                      userName: session.user.username, userId: session.user.id]
 
     }
 
@@ -184,9 +184,30 @@ class CasoController {
         }
     }
 
+    def send() {
+        // Get all selected cases
+        def casos = Caso.getAll(params["id[]"]);
 
+        def builder = new JsonBuilder()
 
-        def list = Caso.getAll(params.id ? params.id.split(',').toList() : null)
+        // Check if user has selected the minimum number of cases
+        if (casos.size >= 3) {
+
+            // Generate case list file and receives the file id inside mongo
+            String id = toJson(casos)
+
+            def port = request.serverPort
+
+            if (Environment.current == Environment.DEVELOPMENT) {
+                port = 8080
+            }
+            render "http://${request.serverName}:${port}/process/task/complete/${session.taskId}?files=${id}"
+        } else {
+            flash.message = "Por favor selecione no minimo 3 casos."
+            redirect action: "index"
+        }
+    }
+
 
     private def toJson(list) {
         def builder = new JsonBuilder()
