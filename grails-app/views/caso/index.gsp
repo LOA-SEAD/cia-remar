@@ -2,29 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--Import Google Icon Font-->
-	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<!--Import materialize.css-->
-	<link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
-	<link rel="stylesheet" type="text/css" href="css/caso.css">
+    <!--Import Google Icon Font, Font Awesome and Page CSS-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <g:external dir="css" file="caso.css"/>
 
-	<!--Let browser know website is optimized for mobile-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<meta name="layout" content="main">
-	<meta charset="utf-8">
-	<g:javascript src="editableTable.js"/>
-	<g:javascript src="scriptTable.js"/>
-	<g:javascript src="validate.js"/>
-	<g:javascript src="caso.js"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="layout" content="main"/>
+    <meta charset="utf-8"/>
+    <meta property="user-name" content="${userName}"/>
+    <meta property="user-id" content="${userId}"/>
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-	<meta property="user-name" content="${userName}"/>
-	<meta property="user-id" content="${userId}"/>
-
-	<g:set var="entityName" value="${message(code: 'caso.label', default: 'Caso')}"/>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<g:javascript src="iframeResizer.contentWindow.min.js"/>
+    <g:set var="entityName" value="${message(code: 'caso.label', default: 'Caso')}"/>
 
 </head>
 
@@ -363,5 +353,6 @@
 
 </script>
 
+    <g:javascript src="caso.js"/>
 </body>
 </html>
