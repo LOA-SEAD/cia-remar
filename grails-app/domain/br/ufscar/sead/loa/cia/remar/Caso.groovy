@@ -29,12 +29,12 @@ class Caso {
         pergunta4 blank: false
         pergunta5 blank: false
         pergunta6 blank: false
-        resposta1 blank: false
-        resposta2 blank: false
-        resposta3 blank: false
-        resposta4 blank: false
-        resposta5 blank: false
-        pistafinal blank: false
+        resposta1 blank: false, size: 1..15
+        resposta2 blank: false, size: 1..15
+        resposta3 blank: false, size: 1..15
+        resposta4 blank: false, size: 1..15
+        resposta5 blank: false, size: 1..15
+        pistafinal blank: false, size: 1..15
         author blank: false
         indice blank: true
         ownerId blank: false, nullable: false
