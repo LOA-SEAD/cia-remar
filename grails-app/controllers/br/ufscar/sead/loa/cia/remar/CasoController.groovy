@@ -185,11 +185,10 @@ class CasoController {
     }
 
 
-    def toJson() {
-        log.info("\nEntrou no toJson")
 
         def list = Caso.getAll(params.id ? params.id.split(',').toList() : null)
 
+    private def toJson(list) {
         def builder = new JsonBuilder()
 
         list.get(0).indice = 1
@@ -261,8 +260,8 @@ class CasoController {
         )
 
         log.debug builder.toString()
-
         log.info(json);
+
         def dataPath = servletContext.getRealPath("/data")
         def userPath = new File(dataPath, "/" + springSecurityService.getCurrentUser().getId() + "/" + session.taskId)
         userPath.mkdirs()
@@ -275,13 +274,7 @@ class CasoController {
         pw.close();
         log.info(file)
         String id = MongoHelper.putFile(file.absolutePath)
-
-        def port = request.serverPort
-        if (Environment.current == Environment.DEVELOPMENT) {
-            port = 8080
-        }
-
-        redirect uri: "http://${request.serverName}:${port}/process/task/complete/${session.taskId}", params: [files: id]
+        return id;
     }
 
     def returnInstance(Caso casoInstance) {
