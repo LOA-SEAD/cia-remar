@@ -32,15 +32,9 @@ class CasoController {
 
     }
 
-    def show(Caso casoInstance) {
-        log.info("\nEntrou no show")
-        respond casoInstance
-    }
-
     def create() {
         respond new Caso(params)
     }
-
 
     @Transactional
     def save(Caso casoInstance) {
@@ -103,9 +97,7 @@ class CasoController {
     }
 
     @Transactional
-    def update() {
-        Caso casoInstance = Caso.findById(Integer.parseInt(params.casoID))
-
+    def update(Caso casoInstance) {
         casoInstance.descricao = params.descricao
         casoInstance.pergunta1 = params.pergunta1
         casoInstance.pergunta2 = params.pergunta2
@@ -183,73 +175,26 @@ class CasoController {
     private toJson(list) {
         def builder = new JsonBuilder()
 
-        list.get(0).indice = 1
-        list.get(1).indice = 2
-        list.get(2).indice = 3
-
         final String SEGREDO = "<segredo>"
         final String PONTOS = "....................";
+        def jsonBody = [:]
+        for (int i : (1..3)) {
+            jsonBody["caso${i}descricao"]  = [list[i-1].getDescricao()]
+            jsonBody["caso${i}perguntas"]  = [list[i-1].getPergunta1().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta2().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta3().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta4().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta5().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta6().replaceAll(SEGREDO, PONTOS)]
+            jsonBody["caso${i}respostas"]  = [list[i-1].getResposta1(),
+                                              list[i-1].getResposta2(),
+                                              list[i-1].getResposta3(),
+                                              list[i-1].getResposta4(),
+                                              list[i-1].getResposta5()]
+            jsonBody["caso${i}pistafinal"] = [list[i-1].getPistafinal()]
+        }
 
-        def json = builder(
-                [
-                        ('caso' + list.get(0).indice + 'descricao') : [list.get(0).getDescricao()],
-                        ('caso' + list.get(0).indice + 'perguntas') : [
-                                list.get(0).getPergunta1().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta2().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta3().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta4().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta5().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta6().replaceAll(SEGREDO, PONTOS)
-                        ],
-
-                        ('caso' + list.get(0).indice + 'respostas') : [
-                                list.get(0).getResposta1(),
-                                list.get(0).getResposta2(),
-                                list.get(0).getResposta3(),
-                                list.get(0).getResposta4(),
-                                list.get(0).getResposta5()
-                        ],
-                        ('caso' + list.get(0).indice + 'pistafinal'): [list.get(0).getPistafinal()],
-
-                        ('caso' + list.get(1).indice + 'descricao') : [list.get(1).getDescricao()],
-                        ('caso' + list.get(1).indice + 'perguntas') : [
-                                list.get(1).getPergunta1().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta2().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta3().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta4().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta5().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta6().replaceAll(SEGREDO, PONTOS)
-                        ],
-
-                        ('caso' + list.get(1).indice + 'respostas') : [
-                                list.get(1).getResposta1(),
-                                list.get(1).getResposta2(),
-                                list.get(1).getResposta3(),
-                                list.get(1).getResposta4(),
-                                list.get(1).getResposta5()
-                        ],
-                        ('caso' + list.get(1).indice + 'pistafinal'): [list.get(1).getPistafinal()],
-
-                        ('caso' + list.get(2).indice + 'descricao') : [list.get(2).getDescricao()],
-                        ('caso' + list.get(2).indice + 'perguntas') : [
-                                list.get(2).getPergunta1().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta2().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta3().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta4().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta5().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta6().replaceAll(SEGREDO, PONTOS)
-                        ],
-
-                        ('caso' + list.get(2).indice + 'respostas') : [
-                                list.get(2).getResposta1(),
-                                list.get(2).getResposta2(),
-                                list.get(2).getResposta3(),
-                                list.get(2).getResposta4(),
-                                list.get(2).getResposta5()
-                        ],
-                        ('caso' + list.get(2).indice + 'pistafinal'): [list.get(2).getPistafinal()]
-                ]
-        )
+        def json = builder(jsonBody);
 
         log.debug builder.toString()
         log.info(json);
