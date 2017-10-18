@@ -1,6 +1,5 @@
 package br.ufscar.sead.loa.cia.remar
 
-
 import br.ufscar.sead.loa.remar.User
 import br.ufscar.sead.loa.remar.api.MongoHelper
 import grails.converters.JSON
@@ -16,12 +15,11 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class CasoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", send: "POST"]
 
     def springSecurityService
 
     def index(Integer max) {
-        log.info("\nEntrou no index")
         if (params.t) {
             session.taskId = params.t
         }
@@ -29,24 +27,18 @@ class CasoController {
 
         def list = Caso.findAllByAuthor(session.user.username)
 
-        render view: "index", model: [casoInstanceList: list, casoinstanceCount: list.size(),
-                                      userName        : session.user.username, userId: session.user.id]
+        render view: "index", model: [CaseInstanceList: list, caseInstanceCount: list.size(),
+                                      userName: session.user.username, userId: session.user.id]
 
-    }
-
-    def show(Caso casoInstance) {
-        log.info("\nEntrou no show")
-        respond casoInstance
     }
 
     def create() {
         respond new Caso(params)
     }
 
-
     @Transactional
-    def newCaso(Caso casoInstance) {
-        log.info("\nEntrou no newCaso 1")
+    def save(Caso casoInstance) {
+        log.info("Saving new Case for ownerId" + session.user.id)
         if (casoInstance.author == null) {
             casoInstance.author = session.user.username
         }
@@ -70,11 +62,18 @@ class CasoController {
         newCaso.resposta5 = casoInstance.resposta5
         newCaso.pistafinal = casoInstance.pistafinal
 
-        newCaso.author = casoInstance.author
-        newCaso.indice = casoInstance.indice
-        newCaso.ownerId = casoInstance.ownerId
+        if (casoInstance.author) {
+            newCaso.author = casoInstance.author
+        } else {
+            newCaso.author = session.user.username
+        }
 
-        log.info("\nAtribuiu valores ao caso " + newCaso.descricao)
+        if (casoInstance.ownerId) {
+            newCaso.ownerId = casoInstance.ownerId
+        } else {
+            newCaso.ownerId = session.user.id
+        }
+
         if (newCaso.hasErrors()) {
             respond newCaso.errors, view: 'create' //TODO
             render newCaso.errors;
@@ -98,44 +97,7 @@ class CasoController {
     }
 
     @Transactional
-    def save(Caso casoInstance) {
-        log.info("\nEntrou no save")
-        if (casoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (casoInstance.hasErrors()) {
-            respond casoInstance.errors, view: 'create' //TODO
-            render casoInstance.errors;
-            return
-        }
-
-        casoInstance.taskId = session.taskId as String
-
-        casoInstance.save flush: true
-
-        if (request.isXhr()) {
-            render(contentType: "application/json") {
-                JSON.parse("{\"id\":" + casoInstance.getId() + "}")
-            }
-        } else {
-            // TODO
-        }
-
-        redirect(action: index())
-    }
-
-    def edit(Caso casoInstance) {
-        log.info("\nEntrou no edit")
-        respond casoInstance
-    }
-
-    @Transactional
-    def update() {
-        log.info("\nEntrou no update")
-        Caso casoInstance = Caso.findById(Integer.parseInt(params.casoID))
-
+    def update(Caso casoInstance) {
         casoInstance.descricao = params.descricao
         casoInstance.pergunta1 = params.pergunta1
         casoInstance.pergunta2 = params.pergunta2
@@ -185,85 +147,58 @@ class CasoController {
         }
     }
 
-
-    def toJson() {
-        log.info("\nEntrou no toJson")
-
-        def list = Caso.getAll(params.id ? params.id.split(',').toList() : null)
+    def send() {
+        // Get all selected cases
+        def casos = Caso.getAll(params["id[]"]);
 
         def builder = new JsonBuilder()
 
-        list.get(0).indice = 1
-        list.get(1).indice = 2
-        list.get(2).indice = 3
+        // Check if user has selected the minimum number of cases
+        if (casos.size >= 3) {
+
+            // Generate case list file and receives the file id inside mongo
+            String id = toJson(casos)
+
+            def port = request.serverPort
+
+            if (Environment.current == Environment.DEVELOPMENT) {
+                port = 8080
+            }
+            render "http://${request.serverName}:${port}/process/task/complete/${session.taskId}?files=${id}"
+        } else {
+            flash.message = "Por favor selecione no minimo 3 casos."
+            redirect action: "index"
+        }
+    }
+
+
+    private toJson(list) {
+        def builder = new JsonBuilder()
 
         final String SEGREDO = "<segredo>"
         final String PONTOS = "....................";
+        def jsonBody = [:]
+        for (int i : (1..3)) {
+            jsonBody["caso${i}descricao"]  = [list[i-1].getDescricao()]
+            jsonBody["caso${i}perguntas"]  = [list[i-1].getPergunta1().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta2().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta3().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta4().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta5().replaceAll(SEGREDO, PONTOS),
+                                              list[i-1].getPergunta6().replaceAll(SEGREDO, PONTOS)]
+            jsonBody["caso${i}respostas"]  = [list[i-1].getResposta1(),
+                                              list[i-1].getResposta2(),
+                                              list[i-1].getResposta3(),
+                                              list[i-1].getResposta4(),
+                                              list[i-1].getResposta5()]
+            jsonBody["caso${i}pistafinal"] = [list[i-1].getPistafinal()]
+        }
 
-        def json = builder(
-                [
-                        ('caso' + list.get(0).indice + 'descricao') : [list.get(0).getDescricao()],
-                        ('caso' + list.get(0).indice + 'perguntas') : [
-                                list.get(0).getPergunta1().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta2().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta3().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta4().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta5().replaceAll(SEGREDO, PONTOS),
-                                list.get(0).getPergunta6().replaceAll(SEGREDO, PONTOS)
-                        ],
-
-                        ('caso' + list.get(0).indice + 'respostas') : [
-                                list.get(0).getResposta1(),
-                                list.get(0).getResposta2(),
-                                list.get(0).getResposta3(),
-                                list.get(0).getResposta4(),
-                                list.get(0).getResposta5()
-                        ],
-                        ('caso' + list.get(0).indice + 'pistafinal'): [list.get(0).getPistafinal()],
-
-                        ('caso' + list.get(1).indice + 'descricao') : [list.get(1).getDescricao()],
-                        ('caso' + list.get(1).indice + 'perguntas') : [
-                                list.get(1).getPergunta1().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta2().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta3().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta4().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta5().replaceAll(SEGREDO, PONTOS),
-                                list.get(1).getPergunta6().replaceAll(SEGREDO, PONTOS)
-                        ],
-
-                        ('caso' + list.get(1).indice + 'respostas') : [
-                                list.get(1).getResposta1(),
-                                list.get(1).getResposta2(),
-                                list.get(1).getResposta3(),
-                                list.get(1).getResposta4(),
-                                list.get(1).getResposta5()
-                        ],
-                        ('caso' + list.get(1).indice + 'pistafinal'): [list.get(1).getPistafinal()],
-
-                        ('caso' + list.get(2).indice + 'descricao') : [list.get(2).getDescricao()],
-                        ('caso' + list.get(2).indice + 'perguntas') : [
-                                list.get(2).getPergunta1().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta2().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta3().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta4().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta5().replaceAll(SEGREDO, PONTOS),
-                                list.get(2).getPergunta6().replaceAll(SEGREDO, PONTOS)
-                        ],
-
-                        ('caso' + list.get(2).indice + 'respostas') : [
-                                list.get(2).getResposta1(),
-                                list.get(2).getResposta2(),
-                                list.get(2).getResposta3(),
-                                list.get(2).getResposta4(),
-                                list.get(2).getResposta5()
-                        ],
-                        ('caso' + list.get(2).indice + 'pistafinal'): [list.get(2).getPistafinal()]
-                ]
-        )
+        def json = builder(jsonBody);
 
         log.debug builder.toString()
-
         log.info(json);
+
         def dataPath = servletContext.getRealPath("/data")
         def userPath = new File(dataPath, "/" + springSecurityService.getCurrentUser().getId() + "/" + session.taskId)
         userPath.mkdirs()
@@ -276,21 +211,14 @@ class CasoController {
         pw.close();
         log.info(file)
         String id = MongoHelper.putFile(file.absolutePath)
-
-        def port = request.serverPort
-        if (Environment.current == Environment.DEVELOPMENT) {
-            port = 8080
-        }
-
-        redirect uri: "http://${request.serverName}:${port}/process/task/complete/${session.taskId}", params: [files: id]
+        return id;
     }
 
     def returnInstance(Caso casoInstance) {
-        log.info("\nEntrou no returnInstance")
         if (casoInstance == null) {
             notFound()
         } else {
-            render casoInstance.descricao + "%@!" +
+            render  casoInstance.descricao + "%@!" +
                     casoInstance.pergunta1 + "%@!" +
                     casoInstance.pergunta2 + "%@!" +
                     casoInstance.pergunta3 + "%@!" +
@@ -312,7 +240,6 @@ class CasoController {
 
     @Transactional
     def generateCasos() {
-        log.info("generateCasos")
         MultipartFile csv = params.csv
         def user = springSecurityService.getCurrentUser()
         def userId = user.toString().split(':').toList()
@@ -418,7 +345,5 @@ class CasoController {
         }
 
         render "/cia/samples/export/exportCasos.csv"
-
-
     }
 }

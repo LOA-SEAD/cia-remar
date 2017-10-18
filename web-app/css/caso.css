@@ -1,3 +1,8 @@
+ul, li.row {
+    margin: 0;
+    padding: 0;
+}
+
 .remar-input {
     color: #413c3c;
     border-bottom: 1px solid #717171 !important;
@@ -38,7 +43,6 @@ label .required-indicator {
     color: #F70000 !important;
 }
 
-
 .remar-modal {
     text-align: center;
 }
@@ -53,4 +57,144 @@ label .required-indicator {
 
 .remar-orange {
     background-color: #FF5722 !important;
+}
+
+.cluster-header p {
+    font-size: 28px;
+}
+
+.sortable {
+    height: 100%;
+    list-style-type: none;
+    padding: 0;
+}
+
+.sortable li {
+    width: 100%;
+    padding: 10px 0;
+    margin-left: 0 !important;
+    cursor: pointer;
+    color: #5d4037;
+    background-color: white;
+
+    -webkit-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    -moz-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    -ms-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    -o-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.sortable li:hover {
+    background-color: #ddd;
+}
+
+.sortable li.active {
+    color: white;
+    font-weight: 400;
+    background-color: #ff9845;
+    border-color: #ff9845;
+}
+
+a span p,
+.sortable li i,
+.sortable li span {
+    margin: 0 10px;
+}
+
+.sortable li span {
+    vertical-align: middle;
+}
+
+.sortable li i {
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
+.case-management {
+    width: 100%;
+    height: 600px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 8px;
+}
+
+.case-list-box-container {
+    width: 60%;
+    height: 100%;
+    margin: 10px;
+    padding: 0 10px 10px 10px;
+
+    float: left;
+    background-color: #5d4037;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.case-list-box-title,
+.case-list-box {
+    width: 100%;
+}
+
+a span,
+.case-list-box-title,
+.case-list-box-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.case-list-box-title {
+    height: 7.5%;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: white;
+}
+
+.case-list-box-title p {
+    margin: 0;
+}
+
+.case-list-box {
+    height: 80%;
+
+
+    background-color: white;
+    overflow: auto;
+}
+
+.case-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.case-list-box-button {
+    height: 12.5%;
+}
+
+.case-structure {
+    font-weight: 300;
+}
+
+.btn {
+    width: 150px;
+
+    -webkit-transition: background-color 0.3s ease, color 0.3s ease;
+    -moz-transition: background-color 0.3s ease, color 0.3s ease;
+    -ms-transition: background-color 0.3s ease, color 0.3s ease;
+    -o-transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.fa-info {
+    font-size: 1.2rem !important;
 }
