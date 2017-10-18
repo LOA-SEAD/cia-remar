@@ -81,20 +81,12 @@
 
                 <div class="case-list-box-button">
                     <div class="row">
-                        <div class="col s8">
+                        <div class="col s12">
                             <a id="sendButton" class="waves-effect waves-light btn remar-orange disabled">
                                 <span>
                                     <p>Enviar</p>
                                 </span>
                             </a>
-                        </div>
-                        <div class="col s2">
-                            <a id="importButton" class="btn-floating waves-effect waves-light remar-orange tooltipped" data-tooltip="Upload de arquivo .csv"><i
-                                    class="material-icons">file_upload</i></a>
-                        </div>
-                        <div class="col s2">
-                            <a id="exportButton" class="btn-floating waves-effect waves-light remar-orange tooltipped" data-tooltip="Exportar questões para .csv"><i
-                                    class="material-icons">file_download</i></a>
                         </div>
                     </div>
                 </div>
