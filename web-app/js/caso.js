@@ -98,14 +98,14 @@ $(document).ready(function () {
                         $(button).addClass('disabled');
                     }
                 } else if ($(this).attr('id') == 'selected-cases') {
+                    // If the list has the minimum or maximum number of childs after the end of the drag-and-drop event, it means
+                    // that the user has reached the possible number of cases to send. So we enable the button.
+                    if ($(this).children().length => MIN_CASE_COUNT && $(this).children().length <= MAX_CASE_COUNT) {
+                        $(button).removeClass('disabled');
                     // If the number of selected cases is less than the minimum or more than the maximum, disable the send button
                     // thus preventing the user from finishing the task
-                    if ($(this).children().length < MIN_CASE_COUNT || $(this).children().length > MAX_CASE_COUNT) {
+                    } else {
                         $(button).addClass('disabled');
-                    } else if ($(this).children().length == MIN_CASE_COUNT || $(this).children().length == MAX_CASE_COUNT) {
-                        // If the list has the minimum or maximum number of childs after the end of the drag-and-drop event, it means
-                        // that the user has reached the possible number of cases to send. So we enable the button.
-                        $(button).removeClass('disabled');
                     }
                 }
             }
@@ -118,31 +118,42 @@ $(document).ready(function () {
 
     // Case edit button function
     $("li .editButton").click(function(){
+        // Extract selected case ID;
         var caseId = $(this).data('case-id');
+
+        // Request selected case information;
         $.ajax({
             type: 'GET',
             url:  INSTANCE_URL + "/" + caseId,
             data: {'_method': 'GET'},
             success: function(response) {
                 var caseInstance = response.split("%@!");
-                $("#editForm #descricao").val(caseInstance[0]).siblings("label").attr("class","active");
-                $("#editForm #pergunta1").val(caseInstance[1]).siblings("label").attr("class","active");
-                $("#editForm #pergunta2").val(caseInstance[2]).siblings("label").attr("class","active");
-                $("#editForm #pergunta3").val(caseInstance[3]).siblings("label").attr("class","active");
-                $("#editForm #pergunta4").val(caseInstance[4]).siblings("label").attr("class","active");
-                $("#editForm #pergunta5").val(caseInstance[5]).siblings("label").attr("class","active");
-                $("#editForm #pergunta6").val(caseInstance[6]).siblings("label").attr("class","active");
-                $("#editForm #resposta1").attr("value", caseInstance[7]).siblings("label").attr("class","active");
-                $("#editForm #resposta2").attr("value", caseInstance[8]).siblings("label").attr("class","active");
-                $("#editForm #resposta3").attr("value", caseInstance[9]).siblings("label").attr("class","active");
-                $("#editForm #resposta4").attr("value", caseInstance[10]).siblings("label").attr("class","active");
-                $("#editForm #resposta5").attr("value", caseInstance[11]).siblings("label").attr("class","active");
-                $("#editForm #pistafinal").attr("value", caseInstance[12]).siblings("label").attr("class","active");
+
+                // Populate edit form with selected case information
+                $("#editForm #descricao").val(caseInstance[0]);
+                $("#editForm #pergunta1").val(caseInstance[1]);
+                $("#editForm #pergunta2").val(caseInstance[2]);
+                $("#editForm #pergunta3").val(caseInstance[3]);
+                $("#editForm #pergunta4").val(caseInstance[4]);
+                $("#editForm #pergunta5").val(caseInstance[5]);
+                $("#editForm #pergunta6").val(caseInstance[6]);
+                $("#editForm #resposta1").attr("value", caseInstance[7]);
+                $("#editForm #resposta2").attr("value", caseInstance[8]);
+                $("#editForm #resposta3").attr("value", caseInstance[9]);
+                $("#editForm #resposta4").attr("value", caseInstance[10]);
+                $("#editForm #resposta5").attr("value", caseInstance[11]);
+                $("#editForm #pistafinal").attr("value", caseInstance[12]);
                 $("#editForm #editCasoID").attr("value", caseInstance[14]);
-                document.editForm.action = UPDATE_URL + "/" + caseId
                 $("#editModal").openModal();
+
+                // Update form labels to minimize after we updated the edit form
+                Materialize.updateTextFields();
+
+                // Update edit form with correct URL
+                document.editForm.action = UPDATE_URL + "/" + caseId
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                Materialize.toast(ERROR_MSG, TOAST_LIFESPAN_MILLI);
                 console.log(textStatus);
             }
         })
