@@ -125,7 +125,7 @@ $(document).ready(function () {
             data: {'_method': 'GET'},
             success: function(response) {
                 var caseInstance = response.split("%@!");
-                $("#editForm #descricao").attr("value", caseInstance[0]).siblings("label").attr("class","active");
+                $("#editForm #descricao").val(caseInstance[0]).siblings("label").attr("class","active");
                 $("#editForm #pergunta1").val(caseInstance[1]).siblings("label").attr("class","active");
                 $("#editForm #pergunta2").val(caseInstance[2]).siblings("label").attr("class","active");
                 $("#editForm #pergunta3").val(caseInstance[3]).siblings("label").attr("class","active");
