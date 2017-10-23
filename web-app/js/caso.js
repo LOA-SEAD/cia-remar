@@ -100,7 +100,7 @@ $(document).ready(function () {
                 } else if ($(this).attr('id') == 'selected-cases') {
                     // If the list has the minimum or maximum number of childs after the end of the drag-and-drop event, it means
                     // that the user has reached the possible number of cases to send. So we enable the button.
-                    if ($(this).children().length => MIN_CASE_COUNT && $(this).children().length <= MAX_CASE_COUNT) {
+                    if ($(this).children().length >= MIN_CASE_COUNT && $(this).children().length <= MAX_CASE_COUNT) {
                         $(button).removeClass('disabled');
                     // If the number of selected cases is less than the minimum or more than the maximum, disable the send button
                     // thus preventing the user from finishing the task
