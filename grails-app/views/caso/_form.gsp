@@ -3,6 +3,7 @@
     <div class="row">
         <div class="col s12">
             <div class="row">
+                <div class="errorDiv"></div>
                 <div class="input-field col s12">
                     <textarea id="descricao" name="descricao" class="materialize-textarea" length="200" name="descricao" required="" value="${casoInstance?.descricao}"></textarea>
                     <label for="descricao" >Descrição: </label>
