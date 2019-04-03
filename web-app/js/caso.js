@@ -169,6 +169,7 @@ $(document).ready(function () {
         document.createForm.pergunta5.value.length > 0 &&
         document.createForm.pergunta6.value.length > 0) {
             document.createForm.submit();
+            $("#createForm").closeModal();
         } else {
             $("#errorDiv").html("Um dos campos está incorreto. Verifique e tente novamente.")
         }
