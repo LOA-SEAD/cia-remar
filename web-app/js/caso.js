@@ -156,18 +156,18 @@ $(document).ready(function () {
     });
 
     $("#saveCaseButton").click(function() {
-        if (document.createForm.resposta1.value.length <= 15 &&
-        document.createForm.resposta2.value.length <= 15 &&
-        document.createForm.resposta3.value.length <= 15 &&
-        document.createForm.resposta4.value.length <= 15 &&
-        document.createForm.resposta5.value.length <= 15 &&
-        document.createForm.pistafinal.value.length <= 15 &&
-        document.createForm.pergunta1.value.length <= 50 &&
-        document.createForm.pergunta2.value.length <= 50 &&
-        document.createForm.pergunta3.value.length <= 50 &&
-        document.createForm.pergunta4.value.length <= 50 &&
-        document.createForm.pergunta5.value.length <= 50 &&
-        document.createForm.pergunta6.value.length <= 50) {
+        if (document.createForm.resposta1.value.length > 0 &&
+        document.createForm.resposta2.value.length > 0 &&
+        document.createForm.resposta3.value.length > 0 &&
+        document.createForm.resposta4.value.length > 0 &&
+        document.createForm.resposta5.value.length > 0 &&
+        document.createForm.pistafinal.value.length > 0 &&
+        document.createForm.pergunta1.value.length > 0 &&
+        document.createForm.pergunta2.value.length > 0 &&
+        document.createForm.pergunta3.value.length > 0 &&
+        document.createForm.pergunta4.value.length > 0 &&
+        document.createForm.pergunta5.value.length > 0 &&
+        document.createForm.pergunta6.value.length > 0) {
             document.createForm.submit();
         } else {
             $("#errorDiv").html("Um dos campos está incorreto. Verifique e tente novamente.")
