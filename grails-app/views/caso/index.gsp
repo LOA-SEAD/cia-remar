@@ -32,17 +32,17 @@
                 </div>
 
                 <ul id="available-cases" class="row case-list-box sortable" data-button="deleteButton">
-                    <g:each in="${CaseInstanceList}" status="i" var="CaseInstance">
-                        <li class="row" data-case-id="${fieldValue(bean: CaseInstance, field: "id")}" data-owner-id="${fieldValue(bean: CaseInstance, field: "ownerId")}">
+                    <g:each in="${CaseInstanceList}" status="i" var="caseInstance">
+                        <li class="row" data-case-id="${caseInstance.id}" data-owner-id="${caseInstance.ownerId}">
                             <div class="col s2">
                                 <i class="material-icons">drag_handle</i>
                             </div>
                             <div class="col s8">
-                                <span>${fieldValue(bean: CaseInstance, field: "descricao")}</span>
+                                <span>${fieldValue(bean: caseInstance, field: "descricao")}</span>
                             </div>
                             <div class="col s2">
                                 <a class="editButton btn-floating waves-effect waves-light remar-orange tooltipped" data-tooltip="Editar"
-                                   href="#" data-case-id="${fieldValue(bean: CaseInstance, field: "id")}" data-owner-id="${fieldValue(bean: CaseInstance, field: "ownerId")}">
+                                   href="#" data-case-id="${caseInstance.id}" data-owner-id="${caseInstance.ownerId}">
                                     <i style="margin:0;" class="material-icons">edit</i>
                                 </a>
                             </div>
