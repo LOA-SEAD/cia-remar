@@ -23,6 +23,7 @@ var MAX_CASE_COUNT = 3;
 var TOAST_LIFESPAN_MILLI = 4000;
 
 $(document).ready(function () {
+    $(".modal-trigger").leanModal();
     $('.sortable')
         .on('click', 'li', function() {
             $(this).toggleClass('active');
@@ -111,11 +112,6 @@ $(document).ready(function () {
             }
         });
 
-    // New case button click function
-    $("#createButton").click(function() {
-        $("#createModal").openModal();
-    });
-
     // Case edit button function
     $("li .editButton").click(function(){
         // Extract selected case ID;
@@ -160,7 +156,26 @@ $(document).ready(function () {
     });
 
     $("#saveCaseButton").click(function() {
-        document.createForm.submit();
+        if (document.createForm.resposta1.value.length > 0 &&
+        document.createForm.resposta2.value.length > 0 &&
+        document.createForm.resposta3.value.length > 0 &&
+        document.createForm.resposta4.value.length > 0 &&
+        document.createForm.resposta5.value.length > 0 &&
+        document.createForm.pistafinal.value.length > 0 &&
+        document.createForm.pergunta1.value.length > 0 &&
+        document.createForm.pergunta2.value.length > 0 &&
+        document.createForm.pergunta3.value.length > 0 &&
+        document.createForm.pergunta4.value.length > 0 &&
+        document.createForm.pergunta5.value.length > 0 &&
+        document.createForm.pergunta6.value.length > 0) {
+            document.createForm.submit();
+            $("#createForm").closeModal();
+        } else {
+            $("#errorDiv").html("Um dos campos está incorreto. Verifique e tente novamente.")
+        }
+
+
+
     });
 
     // Finish case selection button click function

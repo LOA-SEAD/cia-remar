@@ -90,23 +90,20 @@ class CasoController {
         if (newCaso.hasErrors()) {
             respond newCaso.errors, view: 'create' //TODO
             render newCaso.errors;
-            return
-        }
-
-        log.info("\nSalvar o caso " + newCaso.descricao + " com id: " + newCaso.getId())
-        newCaso.save flush: true
-        log.info("\nSalvou o caso " + newCaso.descricao + " com id: " + newCaso.getId())
-        if (request.isXhr()) {
-            render(contentType: "application/json") {
-                JSON.parse("{\"id\":" + newCaso.getId() + "}")
-            }
         } else {
-            // TODO
+            log.info("\nSalvar o caso " + newCaso.descricao + " com id: " + newCaso.getId())
+            newCaso.save flush: true
+            log.info("\nSalvou o caso " + newCaso.descricao + " com id: " + newCaso.getId())
+            if (request.isXhr()) {
+                render(contentType: "application/json") {
+                    JSON.parse("{\"id\":" + newCaso.getId() + "}")
+                }
+            } else {
+                // TODO
+            }
+            log.info("\nFinalizando ... ")
+            redirect(action: index())
         }
-        log.info("\nFinalizando ... ")
-        redirect(action: index())
-
-
     }
 
     @Transactional

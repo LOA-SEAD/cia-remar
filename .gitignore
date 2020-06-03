@@ -23,6 +23,7 @@ stacktrace.log
 /logs
 .classpath
 .project
+.slcache
 
 # end Grails stuff
 

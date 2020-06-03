@@ -53,7 +53,7 @@
                 <div class="case-list-box-button">
                     <div class="row">
                         <div class="col s6">
-                            <a id="createButton" class="waves-effect waves-light btn remar-orange">
+                            <a id="createButton" href="#createModal" class="modal-trigger waves-effect waves-light btn remar-orange">
                                 <span>
                                     <p>Adicionar</p>
                                 </span>
@@ -102,7 +102,7 @@
                 <g:render template="form"/>
             </div>
             <div class="modal-footer">
-                <a id="saveCaseButton" href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange">Enviar</a>
+                <a id="saveCaseButton" href="#!" class="save modal-action btn waves-effect waves-light remar-orange">Enviar</a>
                 <a href="#!" class="save modal-action modal-close btn waves-effect waves-light remar-orange">Cancelar</a>
             </div>
         </g:form>
