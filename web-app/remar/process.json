@@ -19,7 +19,8 @@
     }
   ],
   "outputs": [
-    "web"
+    "web",
+    "desktop"
   ],
 
   "vars": {
