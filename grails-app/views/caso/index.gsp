@@ -110,7 +110,7 @@
 
     <!-- Modal -->
     <div id="editModal" class="modal remar-modal">
-        <g:form name="editForm" action="edit" method="PUT">
+        <g:form name="editForm" url="[resource: casoInstance, action: 'update']">
             <div class="modal-content">
                 <h4>Editar Caso</h4>
                 <div class="row">

@@ -11,7 +11,36 @@
             </div>
         </div>
     </div>
-
+    
+    <div class="row">
+        <div class="col s12">
+            <div class="row">               
+                <div class="input-field col s12">
+                    <select id="dificuldade" name="dificuldade" value="${casoInstance?.dificuldade}">
+                        <g:if test="${casoInstance?.dificuldade == 1}">
+                            <option value="1" selected>Fácil</option>
+                        </g:if>
+                        <g:else>
+                            <option value="1">Fácil</option>
+                        </g:else>
+                        <g:if test="${casoInstance?.dificuldade == 2}">
+                            <option value="2" selected>Médio</option>
+                        </g:if>
+                        <g:else>
+                            <option value="2">Médio</option>
+                        </g:else>
+                        <g:if test="${casoInstance?.dificuldade == 3}">
+                            <option value="3" selected>Díficil</option>
+                        </g:if>
+                        <g:else>
+                            <option value="3">Díficil</option>
+                        </g:else>
+                    </select>
+                    <label for="dificuldade">Modo do Caça-Palavras:</label>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <ul class="collapsible" data-collapsible="accordion">
         <li>
