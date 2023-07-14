@@ -3,6 +3,7 @@ package br.ufscar.sead.loa.cia.remar
 class Caso {
 
     String descricao
+    int dificuldade
     String pergunta1
     String pergunta2
     String pergunta3
@@ -37,7 +38,24 @@ class Caso {
         author blank: false
         ownerId blank: false, nullable: false
         taskId nullable: true
-
+        dificuldade blank: false, nullable: false, inList: [1,2,3]
     }
 
+    String toString() {
+        return this.id + " " +
+                this.descricao + " " +
+                this.dificuldade + " " +
+                this.pergunta1 + " " +
+                this.pergunta2 + " " +
+                this.pergunta3 + " " +
+                this.pergunta4 + " " +
+                this.pergunta5 + " " +
+                this.pergunta6 + " " +
+                this.resposta1 + " " +
+                this.resposta2 + " " +
+                this.resposta3 + " " +
+                this.resposta4 + " " +
+                this.resposta5 + " " +
+                this.pistafinal;
+    }
 }

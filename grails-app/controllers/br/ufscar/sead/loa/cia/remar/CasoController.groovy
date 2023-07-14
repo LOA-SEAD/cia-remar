@@ -15,7 +15,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class CasoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", send: "POST"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "DELETE", send: "POST"]
     
     def beforeInterceptor = [action: this.&check, only: ['index']]
 
@@ -74,6 +74,7 @@ class CasoController {
         newCaso.resposta4 = casoInstance.resposta4
         newCaso.resposta5 = casoInstance.resposta5
         newCaso.pistafinal = casoInstance.pistafinal
+        newCaso.dificuldade = casoInstance.dificuldade
 
         if (casoInstance.author) {
             newCaso.author = casoInstance.author
@@ -108,20 +109,6 @@ class CasoController {
 
     @Transactional
     def update(Caso casoInstance) {
-        casoInstance.descricao = params.descricao
-        casoInstance.pergunta1 = params.pergunta1
-        casoInstance.pergunta2 = params.pergunta2
-        casoInstance.pergunta3 = params.pergunta3
-        casoInstance.pergunta4 = params.pergunta4
-        casoInstance.pergunta5 = params.pergunta5
-        casoInstance.pergunta6 = params.pergunta6
-
-        casoInstance.resposta1 = params.resposta1
-        casoInstance.resposta2 = params.resposta2
-        casoInstance.resposta3 = params.resposta3
-        casoInstance.resposta4 = params.resposta4
-        casoInstance.resposta5 = params.resposta5
-        casoInstance.pistafinal = params.pistafinal
 
         casoInstance.save flush: true
 
@@ -202,6 +189,7 @@ class CasoController {
                                               list[i-1].getResposta4(),
                                               list[i-1].getResposta5()]
             jsonBody["caso${i}pistafinal"] = [list[i-1].getPistafinal()]
+            jsonBody["caso${i}dificuldade"] = list[i-1].getDificuldade()
         }
 
         def json = builder(jsonBody);
@@ -229,6 +217,7 @@ class CasoController {
             notFound()
         } else {
             render  casoInstance.descricao + "%@!" +
+                    casoInstance.dificuldade + "%@!" +
                     casoInstance.pergunta1 + "%@!" +
                     casoInstance.pergunta2 + "%@!" +
                     casoInstance.pergunta3 + "%@!" +

@@ -24,6 +24,7 @@ var TOAST_LIFESPAN_MILLI = 4000;
 
 $(document).ready(function () {
     $(".modal-trigger").leanModal();
+    $('select').material_select();
     $('.sortable')
         .on('click', 'li', function() {
             $(this).toggleClass('active');
@@ -125,28 +126,32 @@ $(document).ready(function () {
             success: function(response) {
                 var caseInstance = response.split("%@!");
 
+                console.log(caseInstance);
+
                 // Populate edit form with selected case information
                 $("#editForm #descricao").val(caseInstance[0]);
-                $("#editForm #pergunta1").val(caseInstance[1]);
-                $("#editForm #pergunta2").val(caseInstance[2]);
-                $("#editForm #pergunta3").val(caseInstance[3]);
-                $("#editForm #pergunta4").val(caseInstance[4]);
-                $("#editForm #pergunta5").val(caseInstance[5]);
-                $("#editForm #pergunta6").val(caseInstance[6]);
-                $("#editForm #resposta1").attr("value", caseInstance[7]);
-                $("#editForm #resposta2").attr("value", caseInstance[8]);
-                $("#editForm #resposta3").attr("value", caseInstance[9]);
-                $("#editForm #resposta4").attr("value", caseInstance[10]);
-                $("#editForm #resposta5").attr("value", caseInstance[11]);
-                $("#editForm #pistafinal").attr("value", caseInstance[12]);
-                $("#editForm #editCasoID").attr("value", caseInstance[14]);
+                $("#editForm #dificuldade").val(caseInstance[1]);
+                $("#editForm #dificuldade").material_select();
+                $("#editForm #pergunta1").val(caseInstance[2]);
+                $("#editForm #pergunta2").val(caseInstance[3]);
+                $("#editForm #pergunta3").val(caseInstance[4]);
+                $("#editForm #pergunta4").val(caseInstance[5]);
+                $("#editForm #pergunta5").val(caseInstance[6]);
+                $("#editForm #pergunta6").val(caseInstance[7]);
+                $("#editForm #resposta1").attr("value", caseInstance[8]);
+                $("#editForm #resposta2").attr("value", caseInstance[9]);
+                $("#editForm #resposta3").attr("value", caseInstance[10]);
+                $("#editForm #resposta4").attr("value", caseInstance[11]);
+                $("#editForm #resposta5").attr("value", caseInstance[12]);
+                $("#editForm #pistafinal").attr("value", caseInstance[13]);
+                $("#editForm #editCasoID").attr("value", caseInstance[15]);
                 $("#editModal").openModal();
 
                 // Update form labels to minimize after we updated the edit form
                 Materialize.updateTextFields();
 
                 // Update edit form with correct URL
-                document.editForm.action = UPDATE_URL + "/" + caseId
+                // document.editForm.action = UPDATE_URL + "/" + caseId
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 Materialize.toast(ERROR_MSG, TOAST_LIFESPAN_MILLI);
